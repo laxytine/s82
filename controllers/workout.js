@@ -19,22 +19,21 @@ module.exports.addWorkout = (req,res) => {
 
 };
 
+
 module.exports.getAllWorkouts = (req, res) => {
+    const userId = req.user._id;
 
-	Workout.find({})
-	.then(workouts => {
-
-	    if (workouts.length > 0){
-	        return res.status(200).send({ workouts });
-	    }
-	    else {
-
-	        return res.status(200).send({ message: 'No workouts found.' })
-	    }
-
-	}).catch(err => res.status(500).send({ error: 'Error finding workouts.' }));
-
+    Workout.find({ user: userId })
+        .then(workouts => {
+            if (workouts.length > 0) {
+                return res.status(200).send(workouts);
+            } else {
+                return res.status(200).send({ message: 'No workouts found for this user.' });
+            }
+        })
+        .catch(err => res.status(500).send({ error: 'Error finding workouts.' }));
 };
+
 
 module.exports.getWorkoutById = (req, res) => {
 
@@ -51,6 +50,7 @@ module.exports.getWorkoutById = (req, res) => {
 	});
 
 };
+
 
 module.exports.updateWorkout = (req, res) => {
 
@@ -80,6 +80,7 @@ module.exports.updateWorkout = (req, res) => {
 	});
 };
 
+
 module.exports.deleteWorkout = (req, res) => {
 
     return Workout.deleteOne({ _id: req.params.id})
@@ -101,6 +102,7 @@ module.exports.deleteWorkout = (req, res) => {
 		return res.status(500).send({ error: 'Error in deleting a workout.' });
 	});
 };
+
 
 module.exports.completedWorkoutStatus = (req, res) => {
     let workoutStatus = {
