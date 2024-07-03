@@ -8,7 +8,8 @@ module.exports.addWorkout = (req,res) => {
 	let newWorkout = new Workout({
 		userId : req.user.id,
 		name : req.body.name,
-		duration : req.body.duration
+		duration : req.body.duration,
+        status : req.body.status
 	});
 
 	newWorkout.save()
