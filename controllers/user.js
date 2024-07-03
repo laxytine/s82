@@ -57,3 +57,15 @@ module.exports.loginUser = (req, res) => {
         return res.status(400).send({ message: 'Invalid email format' });
     }
 };
+
+//[SECTION] Retrieve user details
+
+    module.exports.getProfile = (req, res) => {
+
+        return User.findById(req.user.id)
+        .then(result => {
+            result.password = "";
+            return res.send(result);
+        })
+        .catch(err => res.send(err))
+    };

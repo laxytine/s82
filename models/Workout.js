@@ -5,7 +5,8 @@ const { ObjectId } = mongoose.Schema.Types;
 const workoutSchema = new mongoose.Schema({
 	userId: {
 		type: ObjectId,
-		required: [false]
+		required: true,
+		ref: 'User'
 	},
 	name: {
 		type: String,
